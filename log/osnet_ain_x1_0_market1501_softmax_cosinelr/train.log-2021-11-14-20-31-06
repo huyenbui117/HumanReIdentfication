@@ -1,0 +1,306 @@
+Show configuration
+adam:
+  beta1: 0.9
+  beta2: 0.999
+cuhk03:
+  classic_split: False
+  labeled_images: False
+  use_metric_cuhk03: False
+data:
+  combineall: False
+  height: 256
+  k_tfm: 1
+  load_train_targets: False
+  norm_mean: [0.485, 0.456, 0.406]
+  norm_std: [0.229, 0.224, 0.225]
+  root: D:\pythonProject1\reid-data
+  save_dir: log/osnet_ain_x1_0_market1501_softmax_cosinelr
+  sources: ['market1501']
+  split_id: 0
+  targets: ['market1501']
+  transforms: ['random_flip', 'random_erase']
+  type: image
+  width: 128
+  workers: 4
+loss:
+  name: softmax
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 1.0
+    weight_x: 0.0
+market1501:
+  use_500k_distractors: False
+model:
+  load_weights: 
+  name: osnet_ain_x1_0
+  pretrained: True
+  resume: 
+rmsprop:
+  alpha: 0.99
+sampler:
+  num_cams: 1
+  num_datasets: 1
+  num_instances: 4
+  train_sampler: RandomSampler
+  train_sampler_t: RandomSampler
+sgd:
+  dampening: 0.0
+  momentum: 0.9
+  nesterov: False
+test:
+  batch_size: 300
+  dist_metric: cosine
+  eval_freq: -1
+  evaluate: False
+  normalize_feature: False
+  ranks: [1, 5, 10, 20]
+  rerank: False
+  start_eval: 0
+  visrank: False
+  visrank_topk: 10
+train:
+  base_lr_mult: 0.1
+  batch_size: 64
+  fixbase_epoch: 10
+  gamma: 0.1
+  lr: 0.01
+  lr_scheduler: cosine
+  max_epoch: 10
+  new_layers: ['classifier']
+  open_layers: ['classifier']
+  optim: amsgrad
+  print_freq: 20
+  seed: 1
+  staged_lr: False
+  start_epoch: 0
+  stepsize: [20]
+  weight_decay: 0.0005
+use_gpu: False
+video:
+  pooling_method: avg
+  sample_method: evenly
+  seq_len: 15
+
+Collecting env info ...
+** System info **
+PyTorch version: 1.10.0
+Is debug build: False
+CUDA used to build PyTorch: None
+ROCM used to build PyTorch: N/A
+
+OS: Microsoft Windows 10 Home
+GCC version: Could not collect
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: N/A
+
+Python version: 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)] (64-bit runtime)
+Python platform: Windows-10-10.0.19041-SP0
+Is CUDA available: False
+CUDA runtime version: No CUDA
+GPU models and configuration: No CUDA
+Nvidia driver version: No CUDA
+cuDNN version: No CUDA
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+
+Versions of relevant libraries:
+[pip3] numpy==1.19.2
+[pip3] numpydoc==1.1.0
+[pip3] torch==1.10.0
+[pip3] torchreid==1.4.0
+[pip3] torchvision==0.11.1
+[conda] blas                      1.0                         mkl  
+[conda] cpuonly                   2.0                           0    pytorch
+[conda] cudatoolkit               10.1.243             h74a9793_0  
+[conda] mkl                       2020.2                      256  
+[conda] mkl-service               2.3.0            py38hb782905_0  
+[conda] mkl_fft                   1.2.0            py38h45dec08_0  
+[conda] mkl_random                1.1.1            py38h47e9c7a_0  
+[conda] numpy                     1.19.2           py38hadc3359_0  
+[conda] numpy-base                1.19.2           py38ha3acd2a_0  
+[conda] numpydoc                  1.1.0              pyhd3eb1b0_1  
+[conda] pytorch                   1.10.0              py3.8_cpu_0    pytorch
+[conda] pytorch-mutex             1.0                         cpu    pytorch
+[conda] tensorflow                2.3.0           mkl_py38h8557ec7_0  
+[conda] torch                     1.9.1                    pypi_0    pypi
+[conda] torchreid                 1.4.0                     dev_0    <develop>
+[conda] torchvision               0.11.1                 py38_cpu  [cpuonly]  pytorch
+        Pillow (8.0.1)
+
+Building train transforms ...
++ resize to 256x128
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
++ random erase
+Building test transforms ...
++ resize to 256x128
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+=> Loading train (source) dataset
+=> Loaded Market1501
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   751 |    12936 |         6
+  query    |   750 |     3368 |         6
+  gallery  |   751 |    15913 |         6
+  ----------------------------------------
+=> Loading test (target) dataset
+=> Loaded Market1501
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   751 |    12936 |         6
+  query    |   750 |     3368 |         6
+  gallery  |   751 |    15913 |         6
+  ----------------------------------------
+
+
+  **************** Summary ****************
+  source            : ['market1501']
+  # source datasets : 1
+  # source ids      : 751
+  # source images   : 12936
+  # source cameras  : 6
+  target            : ['market1501']
+  *****************************************
+
+
+Building model: osnet_ain_x1_0
+Successfully loaded imagenet pretrained weights from "C:\Users\65905/.cache\torch\checkpoints\osnet_ain_x1_0_imagenet.pth"
+** The following layers are discarded due to unmatched keys or layer size: ['classifier.weight', 'classifier.bias']
+Model complexity: params=2,193,616 flops=978,878,352
+Building softmax-engine for image-reid
+=> Start training
+* Only train ['classifier'] (epoch: 1/10)
+epoch: [1/10][20/202]	time 10.706 (11.533)	data 0.009 (1.134)	eta 6:24:25	loss 7.9106 (8.3076)	acc 1.5625 (1.6406)	lr 0.010000
+epoch: [1/10][40/202]	time 10.608 (10.966)	data 0.008 (0.572)	eta 6:01:52	loss 7.1889 (7.9323)	acc 6.2500 (3.0469)	lr 0.010000
+epoch: [1/10][60/202]	time 10.434 (10.771)	data 0.009 (0.384)	eta 5:51:51	loss 7.0767 (7.6599)	acc 10.9375 (4.7396)	lr 0.010000
+epoch: [1/10][80/202]	time 10.439 (10.596)	data 0.009 (0.290)	eta 5:42:35	loss 6.7955 (7.4809)	acc 18.7500 (6.6016)	lr 0.010000
+epoch: [1/10][100/202]	time 10.122 (10.536)	data 0.012 (0.234)	eta 5:37:09	loss 7.0294 (7.3495)	acc 12.5000 (7.7656)	lr 0.010000
+epoch: [1/10][120/202]	time 10.342 (10.559)	data 0.008 (0.197)	eta 5:34:22	loss 6.8406 (7.2383)	acc 14.0625 (8.7370)	lr 0.010000
+epoch: [1/10][140/202]	time 10.094 (10.524)	data 0.009 (0.170)	eta 5:29:45	loss 6.7827 (7.1220)	acc 15.6250 (9.8549)	lr 0.010000
+epoch: [1/10][160/202]	time 10.474 (10.491)	data 0.010 (0.150)	eta 5:25:13	loss 6.6418 (7.0496)	acc 17.1875 (10.7715)	lr 0.010000
+epoch: [1/10][180/202]	time 10.118 (10.463)	data 0.011 (0.134)	eta 5:20:52	loss 6.4737 (6.9793)	acc 20.3125 (11.6146)	lr 0.010000
+epoch: [1/10][200/202]	time 10.367 (10.449)	data 0.008 (0.122)	eta 5:16:56	loss 6.4849 (6.9128)	acc 15.6250 (12.4141)	lr 0.010000
+* Only train ['classifier'] (epoch: 2/10)
+epoch: [2/10][20/202]	time 10.421 (11.420)	data 0.011 (1.165)	eta 5:42:13	loss 4.6092 (4.6983)	acc 42.1875 (36.3281)	lr 0.009755
+epoch: [2/10][40/202]	time 10.846 (10.877)	data 0.009 (0.587)	eta 5:22:18	loss 4.7987 (4.5794)	acc 34.3750 (37.1094)	lr 0.009755
+epoch: [2/10][60/202]	time 10.188 (10.526)	data 0.008 (0.395)	eta 5:08:24	loss 4.6378 (4.5541)	acc 32.8125 (37.2135)	lr 0.009755
+epoch: [2/10][80/202]	time 10.147 (10.455)	data 0.009 (0.298)	eta 5:02:50	loss 4.6607 (4.5362)	acc 34.3750 (37.5781)	lr 0.009755
+epoch: [2/10][100/202]	time 10.316 (10.428)	data 0.009 (0.241)	eta 4:58:35	loss 5.6828 (4.6334)	acc 21.8750 (36.6406)	lr 0.009755
+epoch: [2/10][120/202]	time 10.203 (10.404)	data 0.008 (0.202)	eta 4:54:25	loss 4.4893 (4.6787)	acc 32.8125 (36.2370)	lr 0.009755
+epoch: [2/10][140/202]	time 10.119 (10.388)	data 0.009 (0.175)	eta 4:50:31	loss 5.3344 (4.7186)	acc 29.6875 (35.7031)	lr 0.009755
+epoch: [2/10][160/202]	time 10.221 (10.380)	data 0.010 (0.154)	eta 4:46:49	loss 5.9684 (4.7427)	acc 21.8750 (35.5273)	lr 0.009755
+epoch: [2/10][180/202]	time 10.097 (10.372)	data 0.010 (0.138)	eta 4:43:09	loss 4.5494 (4.7699)	acc 34.3750 (35.3559)	lr 0.009755
+epoch: [2/10][200/202]	time 10.226 (10.362)	data 0.010 (0.125)	eta 4:39:26	loss 4.9953 (4.8136)	acc 31.2500 (35.1406)	lr 0.009755
+* Only train ['classifier'] (epoch: 3/10)
+epoch: [3/10][20/202]	time 10.236 (11.483)	data 0.008 (1.129)	eta 5:05:27	loss 3.6779 (4.3568)	acc 53.1250 (43.6719)	lr 0.009045
+epoch: [3/10][40/202]	time 10.240 (10.688)	data 0.011 (0.569)	eta 4:40:44	loss 3.6020 (4.2129)	acc 54.6875 (45.5859)	lr 0.009045
+epoch: [3/10][60/202]	time 11.071 (10.612)	data 0.008 (0.383)	eta 4:35:12	loss 3.3371 (4.1950)	acc 51.5625 (45.3646)	lr 0.009045
+epoch: [3/10][80/202]	time 11.066 (10.826)	data 0.007 (0.289)	eta 4:37:08	loss 4.3923 (4.1803)	acc 39.0625 (45.4492)	lr 0.009045
+epoch: [3/10][100/202]	time 15.282 (11.822)	data 0.004 (0.233)	eta 4:58:42	loss 3.6046 (4.1732)	acc 53.1250 (45.2188)	lr 0.009045
+epoch: [3/10][120/202]	time 14.104 (12.386)	data 0.007 (0.196)	eta 5:08:48	loss 4.7553 (4.1716)	acc 28.1250 (44.9089)	lr 0.009045
+epoch: [3/10][140/202]	time 13.254 (12.617)	data 0.007 (0.169)	eta 5:10:23	loss 4.4245 (4.1659)	acc 40.6250 (44.7879)	lr 0.009045
+epoch: [3/10][160/202]	time 13.683 (12.729)	data 0.011 (0.149)	eta 5:08:54	loss 4.5949 (4.1981)	acc 45.3125 (44.2969)	lr 0.009045
+epoch: [3/10][180/202]	time 13.844 (12.769)	data 0.008 (0.134)	eta 5:05:36	loss 4.8055 (4.2399)	acc 45.3125 (43.5330)	lr 0.009045
+epoch: [3/10][200/202]	time 13.764 (12.836)	data 0.000 (0.121)	eta 5:02:55	loss 4.5060 (4.2595)	acc 39.0625 (43.1719)	lr 0.009045
+* Only train ['classifier'] (epoch: 4/10)
+epoch: [4/10][20/202]	time 13.875 (14.750)	data 0.010 (1.764)	eta 5:42:41	loss 3.3495 (3.6865)	acc 50.0000 (53.1250)	lr 0.007939
+epoch: [4/10][40/202]	time 13.123 (14.145)	data 0.008 (0.887)	eta 5:23:54	loss 3.2402 (3.5994)	acc 67.1875 (54.3750)	lr 0.007939
+epoch: [4/10][60/202]	time 13.334 (13.882)	data 0.000 (0.594)	eta 5:13:16	loss 3.2152 (3.5735)	acc 57.8125 (54.7656)	lr 0.007939
+epoch: [4/10][80/202]	time 13.302 (13.646)	data 0.011 (0.448)	eta 5:03:24	loss 3.7596 (3.6360)	acc 56.2500 (53.6328)	lr 0.007939
+epoch: [4/10][100/202]	time 13.425 (13.594)	data 0.007 (0.361)	eta 4:57:42	loss 3.5371 (3.6289)	acc 56.2500 (53.2500)	lr 0.007939
+epoch: [4/10][120/202]	time 13.294 (13.558)	data 0.008 (0.302)	eta 4:52:24	loss 4.1432 (3.6678)	acc 46.8750 (52.5781)	lr 0.007939
+epoch: [4/10][140/202]	time 13.384 (13.528)	data 0.009 (0.261)	eta 4:47:14	loss 4.4755 (3.6707)	acc 39.0625 (52.0982)	lr 0.007939
+epoch: [4/10][160/202]	time 13.498 (13.524)	data 0.010 (0.229)	eta 4:42:39	loss 3.5526 (3.6994)	acc 51.5625 (51.2988)	lr 0.007939
+epoch: [4/10][180/202]	time 13.930 (13.499)	data 0.016 (0.205)	eta 4:37:37	loss 3.9546 (3.7332)	acc 42.1875 (50.6510)	lr 0.007939
+epoch: [4/10][200/202]	time 13.381 (13.480)	data 0.011 (0.185)	eta 4:32:44	loss 3.6873 (3.7530)	acc 48.4375 (50.1562)	lr 0.007939
+* Only train ['classifier'] (epoch: 5/10)
+epoch: [5/10][20/202]	time 14.095 (14.706)	data 0.016 (1.630)	eta 4:52:09	loss 2.6292 (3.3326)	acc 60.9375 (59.4531)	lr 0.006545
+epoch: [5/10][40/202]	time 13.122 (14.045)	data 0.000 (0.820)	eta 4:34:20	loss 2.8844 (3.1725)	acc 60.9375 (60.6641)	lr 0.006545
+epoch: [5/10][60/202]	time 13.776 (13.659)	data 0.010 (0.550)	eta 4:22:15	loss 2.4014 (3.1058)	acc 75.0000 (60.9896)	lr 0.006545
+epoch: [5/10][80/202]	time 13.071 (13.572)	data 0.011 (0.415)	eta 4:16:03	loss 3.4007 (3.0937)	acc 54.6875 (60.4883)	lr 0.006545
+epoch: [5/10][100/202]	time 13.318 (13.549)	data 0.011 (0.334)	eta 4:11:06	loss 3.4939 (3.0995)	acc 56.2500 (59.9844)	lr 0.006545
+epoch: [5/10][120/202]	time 13.377 (13.562)	data 0.016 (0.280)	eta 4:06:49	loss 2.8290 (3.1064)	acc 64.0625 (59.8047)	lr 0.006545
+epoch: [5/10][140/202]	time 14.867 (13.516)	data 0.000 (0.241)	eta 4:01:29	loss 3.0576 (3.1121)	acc 62.5000 (59.3750)	lr 0.006545
+epoch: [5/10][160/202]	time 14.113 (13.691)	data 0.008 (0.212)	eta 4:00:03	loss 3.0813 (3.1366)	acc 68.7500 (58.8184)	lr 0.006545
+epoch: [5/10][180/202]	time 14.294 (13.793)	data 0.016 (0.190)	eta 3:57:14	loss 3.0258 (3.1501)	acc 53.1250 (58.4462)	lr 0.006545
+epoch: [5/10][200/202]	time 13.065 (13.781)	data 0.009 (0.172)	eta 3:52:26	loss 3.5534 (3.1736)	acc 56.2500 (57.8906)	lr 0.006545
+* Only train ['classifier'] (epoch: 6/10)
+epoch: [6/10][20/202]	time 14.064 (15.318)	data 0.007 (1.754)	eta 4:12:44	loss 2.4809 (2.8239)	acc 70.3125 (64.2188)	lr 0.005000
+epoch: [6/10][40/202]	time 13.552 (14.518)	data 0.016 (0.882)	eta 3:54:42	loss 2.9106 (2.7273)	acc 60.9375 (65.8984)	lr 0.005000
+epoch: [6/10][60/202]	time 13.594 (14.180)	data 0.010 (0.592)	eta 3:44:31	loss 2.4799 (2.6931)	acc 70.3125 (66.1979)	lr 0.005000
+epoch: [6/10][80/202]	time 13.212 (14.023)	data 0.008 (0.447)	eta 3:37:21	loss 2.2362 (2.6758)	acc 73.4375 (66.4844)	lr 0.005000
+epoch: [6/10][100/202]	time 13.561 (13.954)	data 0.016 (0.360)	eta 3:31:38	loss 2.6807 (2.6733)	acc 64.0625 (66.4375)	lr 0.005000
+epoch: [6/10][120/202]	time 10.538 (13.808)	data 0.010 (0.301)	eta 3:24:49	loss 2.9523 (2.6776)	acc 60.9375 (66.2240)	lr 0.005000
+epoch: [6/10][140/202]	time 13.296 (13.768)	data 0.010 (0.260)	eta 3:19:38	loss 2.5519 (2.6757)	acc 68.7500 (66.1161)	lr 0.005000
+epoch: [6/10][160/202]	time 12.874 (13.719)	data 0.012 (0.229)	eta 3:14:21	loss 2.4793 (2.6889)	acc 65.6250 (65.7715)	lr 0.005000
+epoch: [6/10][180/202]	time 13.462 (13.648)	data 0.012 (0.204)	eta 3:08:47	loss 3.2807 (2.7057)	acc 54.6875 (65.4601)	lr 0.005000
+epoch: [6/10][200/202]	time 13.303 (13.615)	data 0.008 (0.185)	eta 3:03:48	loss 3.1417 (2.7064)	acc 54.6875 (65.3828)	lr 0.005000
+* Only train ['classifier'] (epoch: 7/10)
+epoch: [7/10][20/202]	time 13.392 (14.641)	data 0.016 (1.651)	eta 3:12:17	loss 2.5382 (2.3974)	acc 64.0625 (72.9688)	lr 0.003455
+epoch: [7/10][40/202]	time 13.197 (14.029)	data 0.016 (0.831)	eta 2:59:34	loss 1.9611 (2.3216)	acc 81.2500 (74.6094)	lr 0.003455
+epoch: [7/10][60/202]	time 13.692 (13.836)	data 0.008 (0.558)	eta 2:52:29	loss 2.1132 (2.3191)	acc 79.6875 (74.2188)	lr 0.003455
+epoch: [7/10][80/202]	time 13.870 (13.775)	data 0.016 (0.421)	eta 2:47:08	loss 2.3688 (2.3324)	acc 79.6875 (74.0234)	lr 0.003455
+epoch: [7/10][100/202]	time 10.757 (13.677)	data 0.000 (0.338)	eta 2:41:23	loss 2.4897 (2.3242)	acc 70.3125 (74.1250)	lr 0.003455
+epoch: [7/10][120/202]	time 14.317 (13.644)	data 0.010 (0.284)	eta 2:36:27	loss 2.4882 (2.3212)	acc 68.7500 (74.1016)	lr 0.003455
+epoch: [7/10][140/202]	time 13.439 (13.698)	data 0.016 (0.245)	eta 2:32:30	loss 2.4102 (2.3311)	acc 68.7500 (73.8281)	lr 0.003455
+epoch: [7/10][160/202]	time 16.389 (13.655)	data 0.008 (0.215)	eta 2:27:28	loss 2.5041 (2.3407)	acc 68.7500 (73.4668)	lr 0.003455
+epoch: [7/10][180/202]	time 15.401 (13.806)	data 0.008 (0.192)	eta 2:24:30	loss 2.2187 (2.3412)	acc 76.5625 (73.4462)	lr 0.003455
+epoch: [7/10][200/202]	time 20.091 (13.833)	data 0.000 (0.174)	eta 2:20:10	loss 2.5942 (2.3461)	acc 62.5000 (73.2031)	lr 0.003455
+* Only train ['classifier'] (epoch: 8/10)
+epoch: [8/10][20/202]	time 17.463 (17.326)	data 0.013 (1.892)	eta 2:49:13	loss 1.9380 (2.1197)	acc 81.2500 (79.4531)	lr 0.002061
+epoch: [8/10][40/202]	time 15.081 (16.834)	data 0.011 (0.951)	eta 2:38:48	loss 2.1151 (2.1185)	acc 78.1250 (79.0234)	lr 0.002061
+epoch: [8/10][60/202]	time 17.364 (16.787)	data 0.006 (0.637)	eta 2:32:45	loss 2.1524 (2.1062)	acc 76.5625 (79.5312)	lr 0.002061
+epoch: [8/10][80/202]	time 15.714 (16.728)	data 0.000 (0.480)	eta 2:26:38	loss 2.0287 (2.1001)	acc 78.1250 (79.7266)	lr 0.002061
+epoch: [8/10][100/202]	time 13.775 (16.650)	data 0.009 (0.386)	eta 2:20:24	loss 2.1956 (2.0954)	acc 79.6875 (79.9062)	lr 0.002061
+epoch: [8/10][120/202]	time 10.489 (15.673)	data 0.000 (0.323)	eta 2:06:57	loss 1.8994 (2.1008)	acc 84.3750 (79.7917)	lr 0.002061
+epoch: [8/10][140/202]	time 11.035 (14.969)	data 0.016 (0.278)	eta 1:56:15	loss 2.1704 (2.0948)	acc 81.2500 (80.0000)	lr 0.002061
+epoch: [8/10][160/202]	time 10.338 (14.429)	data 0.016 (0.245)	eta 1:47:15	loss 2.0931 (2.0966)	acc 75.0000 (79.8730)	lr 0.002061
+epoch: [8/10][180/202]	time 6.849 (13.756)	data 0.000 (0.219)	eta 1:37:40	loss 2.1620 (2.0998)	acc 75.0000 (79.6875)	lr 0.002061
+epoch: [8/10][200/202]	time 6.564 (13.041)	data 0.016 (0.197)	eta 1:28:14	loss 2.2759 (2.0984)	acc 71.8750 (79.7891)	lr 0.002061
+* Only train ['classifier'] (epoch: 9/10)
+epoch: [9/10][20/202]	time 6.718 (7.174)	data 0.016 (0.610)	eta 0:45:54	loss 1.9087 (2.0072)	acc 82.8125 (82.1875)	lr 0.000955
+epoch: [9/10][40/202]	time 6.556 (6.926)	data 0.000 (0.308)	eta 0:42:00	loss 1.7705 (1.9538)	acc 92.1875 (83.5547)	lr 0.000955
+epoch: [9/10][60/202]	time 6.472 (6.828)	data 0.016 (0.209)	eta 0:39:08	loss 2.0184 (1.9398)	acc 82.8125 (84.3750)	lr 0.000955
+epoch: [9/10][80/202]	time 6.583 (6.766)	data 0.000 (0.158)	eta 0:36:32	loss 1.9777 (1.9370)	acc 84.3750 (84.1992)	lr 0.000955
+epoch: [9/10][100/202]	time 6.617 (6.717)	data 0.016 (0.128)	eta 0:34:01	loss 1.7921 (1.9305)	acc 84.3750 (84.2656)	lr 0.000955
+epoch: [9/10][120/202]	time 6.842 (6.690)	data 0.016 (0.107)	eta 0:31:40	loss 1.6689 (1.9299)	acc 92.1875 (84.1927)	lr 0.000955
+epoch: [9/10][140/202]	time 6.671 (6.685)	data 0.000 (0.093)	eta 0:29:24	loss 1.9448 (1.9329)	acc 82.8125 (84.2857)	lr 0.000955
+epoch: [9/10][160/202]	time 6.540 (6.675)	data 0.000 (0.082)	eta 0:27:08	loss 1.7991 (1.9347)	acc 82.8125 (84.3164)	lr 0.000955
+epoch: [9/10][180/202]	time 6.657 (6.666)	data 0.016 (0.073)	eta 0:24:53	loss 1.8425 (1.9291)	acc 85.9375 (84.4705)	lr 0.000955
+epoch: [9/10][200/202]	time 6.429 (6.661)	data 0.016 (0.067)	eta 0:22:38	loss 1.7346 (1.9250)	acc 89.0625 (84.5312)	lr 0.000955
+* Only train ['classifier'] (epoch: 10/10)
+epoch: [10/10][20/202]	time 6.527 (7.029)	data 0.000 (0.552)	eta 0:21:19	loss 1.9337 (1.8772)	acc 82.8125 (85.2344)	lr 0.000245
+epoch: [10/10][40/202]	time 6.673 (6.764)	data 0.000 (0.280)	eta 0:18:15	loss 1.8780 (1.9091)	acc 84.3750 (84.6484)	lr 0.000245
+epoch: [10/10][60/202]	time 6.538 (6.679)	data 0.000 (0.189)	eta 0:15:48	loss 2.0132 (1.8836)	acc 82.8125 (85.6771)	lr 0.000245
+epoch: [10/10][80/202]	time 6.715 (6.650)	data 0.016 (0.143)	eta 0:13:31	loss 1.9775 (1.8813)	acc 81.2500 (85.6836)	lr 0.000245
+epoch: [10/10][100/202]	time 6.630 (6.655)	data 0.000 (0.116)	eta 0:11:18	loss 1.6890 (1.8643)	acc 92.1875 (86.0781)	lr 0.000245
+epoch: [10/10][120/202]	time 6.535 (6.647)	data 0.000 (0.098)	eta 0:09:05	loss 1.9085 (1.8664)	acc 85.9375 (86.0547)	lr 0.000245
+epoch: [10/10][140/202]	time 6.409 (6.627)	data 0.000 (0.085)	eta 0:06:50	loss 1.9259 (1.8695)	acc 85.9375 (85.9821)	lr 0.000245
+epoch: [10/10][160/202]	time 6.627 (6.616)	data 0.000 (0.075)	eta 0:04:37	loss 1.7584 (1.8700)	acc 87.5000 (85.9668)	lr 0.000245
+epoch: [10/10][180/202]	time 6.785 (6.613)	data 0.000 (0.067)	eta 0:02:25	loss 1.7808 (1.8694)	acc 87.5000 (85.8681)	lr 0.000245
+epoch: [10/10][200/202]	time 6.454 (6.601)	data 0.016 (0.061)	eta 0:00:13	loss 1.6245 (1.8700)	acc 90.6250 (85.8125)	lr 0.000245
+=> Final test
+##### Evaluating market1501 (source) #####
+Extracting features from query set ...
+Done, obtained 3368-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 15913-by-512 matrix
+Speed: 28.3689 sec/batch
+Computing distance matrix with metric=cosine ...
+Computing CMC and mAP ...
+** Results **
+mAP: 2.8%
+CMC curve
+Rank-1  : 9.7%
+Rank-5  : 19.0%
+Rank-10 : 25.3%
+Rank-20 : 31.4%
+Checkpoint saved to "log/osnet_ain_x1_0_market1501_softmax_cosinelr\model\model.pth.tar-10"
+Elapsed 6:57:49
